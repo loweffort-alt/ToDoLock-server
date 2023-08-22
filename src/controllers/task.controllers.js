@@ -8,10 +8,12 @@ export const getTasks = async (req, res) => {
 
 export const createTask = async (req, res) => {
   const { title, description, date } = req.body;
+  const { username } = await User.findById(req.user.id);
   const newTasks = new Task({
     title,
     description,
     date,
+    username: username,
     user: req.user.id,
   });
   const savedTask = await newTasks.save();

@@ -42,6 +42,11 @@ export const login = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credential" });
 
+    if (req.cookies.token)
+      return res.status(400).json({
+        message: "Close current session to login",
+      });
+
     const token = await createAccessToken({ id: userFound._id });
     res.cookie("token", token);
     res.send(userFound);
@@ -63,7 +68,12 @@ export const logout = async (req, res) => {
 export const profile = async (req, res) => {
   const userFound = await User.findById(req.user.id);
   if (!userFound) return res.status(400).json({ message: "User not found" });
-  return res.json(userFound);
+  const returnData = {
+    username: userFound.username,
+    email: userFound.email,
+    createdAt: userFound.createdAt,
+  };
+  return res.json(returnData);
 };
 
 export const deleteProfile = async (req, res) => {

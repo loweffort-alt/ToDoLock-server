@@ -9,7 +9,6 @@ export const authRequired = (req, res, next) => {
 
   jwt.verify(token, TOKEN_KEY, (err, decode) => {
     req.user = decode;
-    console.log(decode);
     next();
   });
 };

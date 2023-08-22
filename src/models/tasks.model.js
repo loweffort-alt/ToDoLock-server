@@ -15,6 +15,10 @@ const taskSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    username: {
+      type: String,
+      required: true,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
