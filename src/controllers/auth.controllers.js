@@ -7,6 +7,10 @@ export const register = async (req, res) => {
 
   try {
     //Es asyncrono porque bcrypt usa su propia api y tengo q esperar a q lo traiga para usarlo
+
+    const userFound = await User.findOne({ email });
+    if (userFound) return res.status(400).json(["Email is already taken"]);
+
     const passwordHash = await bcrypt.hash(password, 10);
 
     const newUser = new User({
