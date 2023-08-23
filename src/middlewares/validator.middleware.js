@@ -15,9 +15,7 @@ export const validateSchema = (schema) => {
       schema.parse(req.body);
       next();
     } catch (error) {
-      return res
-        .status(400)
-        .json({ errors: error.issues.map((e) => e.message) });
+      return res.status(400).json(error.issues.map((e) => e.message));
     }
   };
 };
