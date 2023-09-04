@@ -48,9 +48,7 @@ export const login = async (req, res) => {
     if (!isMatch) return res.status(400).json(["Invalid Password"]);
 
     if (req.cookies.token)
-      return res.status(400).json({
-        message: "Close current session to login",
-      });
+      return res.status(400).json(["Close current session to login"]);
 
     const token = await createAccessToken({ id: userFound._id });
     res.cookie("token", token);

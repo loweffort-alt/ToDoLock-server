@@ -60,7 +60,7 @@ function LoginPage() {
             </button>
           </div>
         </form>
-        <p className="flex place-content-evenly">Don't have an account?</p>
+        <p className="flex place-content-evenly">Dont have an account?</p>
         <Link to="/register" className="text-sky-500">
           Sign up
         </Link>
