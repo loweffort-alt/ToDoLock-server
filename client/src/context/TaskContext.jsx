@@ -15,7 +15,6 @@ export const useTask = () => {
 
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
-  const [isCreated, setIsCreated] = useState(false);
 
   const getTasks = async () => {
     try {
@@ -28,9 +27,7 @@ export function TaskProvider({ children }) {
 
   const createTask = async (task) => {
     try {
-      const tasks = await createTaskRequest(task);
-      setIsCreated(true);
-      console.log(tasks);
+      await createTaskRequest(task);
     } catch (error) {
       console.log(error.response);
     }
@@ -42,7 +39,6 @@ export function TaskProvider({ children }) {
         tasks,
         getTasks,
         createTask,
-        isCreated,
       }}
     >
       {children}
