@@ -4,20 +4,21 @@ import { useNavigate } from "react-router-dom";
 
 const TaskFormPage = () => {
   const { register, handleSubmit } = useForm();
-  const { createTask } = useTask();
+  const { createTask, getTasks } = useTask();
+
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
     createTask(data);
+    getTasks();
     navigate("/tasks");
   });
-
-  const navigate = useNavigate();
 
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md text-center">
         <h1 className="text-2xl font-bold text-center mb-4">Create new task</h1>
-        <form action="" onSubmit={onSubmit}>
+        <form action="" onSubmit={() => onSubmit()}>
           <div className="flex-col gap-3">
             <input
               type="text"
