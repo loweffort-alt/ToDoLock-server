@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import {
   registerRequest,
   loginRequest,
+  logoutRequest,
   verifyTokenRequest,
 } from "../api/auth.js";
 import Cookies from "js-cookie";
@@ -43,6 +44,16 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.log(error.response);
       setErrors(error.response.data);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      const res = await logoutRequest();
+      setIsAuthenticated(false);
+      setUser(null);
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -90,6 +101,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         signUp,
         signIn,
+        logout,
         loading,
         user,
         isAuthenticated,
