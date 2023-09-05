@@ -8,25 +8,28 @@ import AllTasks from "./pages/AllTaskPage";
 import Profile from "./pages/ProfilePage";
 import TaskFormPage from "./pages/TaskFormPage.jsx";
 import ProtectedRoute from "./protectedRoute.jsx";
+import { TaskProvider } from "./context/TaskContext.jsx";
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/*Public Paths*/}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          {/*Only Users Loged*/}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/tasks" element={<AllTasks />} />
-            <Route path="/new-task" element={<TaskFormPage />} />
-            <Route path="/tasks/:id" element={<TaskFormPage />} />
-            <Route path="/profile" element={<Profile />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <TaskProvider>
+        <BrowserRouter>
+          <Routes>
+            {/*Public Paths*/}
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            {/*Only Users Loged*/}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/tasks" element={<AllTasks />} />
+              <Route path="/new-task" element={<TaskFormPage />} />
+              <Route path="/tasks/:id" element={<TaskFormPage />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </TaskProvider>
     </AuthProvider>
   );
 }
