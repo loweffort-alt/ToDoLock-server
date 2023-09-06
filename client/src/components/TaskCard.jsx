@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useTask } from "../context/TaskContext";
 
 const TaskCard = ({ task }) => {
-  const { editTask, deleteTask } = useTask();
+  const { deleteTask } = useTask();
+  const navigate = useNavigate();
 
   return (
     <li className="bg-zinc-800 max-w-md w-full p-5 my-5 rounded-md">
@@ -15,7 +17,7 @@ const TaskCard = ({ task }) => {
             Delete
           </button>
           <button
-            onClick={() => editTask(task)}
+            onClick={() => navigate(`/tasks/${task._id}`)}
             className="bg-blue-500 text-xs rounded-md px-2"
           >
             Edit

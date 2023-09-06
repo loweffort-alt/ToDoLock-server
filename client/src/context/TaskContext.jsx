@@ -2,7 +2,9 @@ import { createContext, useContext, useState } from "react";
 import {
   createTaskRequest,
   deleteTaskRequest,
+  getSingleTaskRequest,
   getTasksRequest,
+  updateTaskRequest,
 } from "../api/tasks";
 
 const TaskContext = createContext();
@@ -29,11 +31,22 @@ export function TaskProvider({ children }) {
     }
   };
 
+  const getSingleTask = async (id) => {
+    try {
+      const res = await getSingleTaskRequest(id);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const createTask = async (task) => {
     try {
       await createTaskRequest(task);
+      const res = await getTasksRequest();
+      setTasks(res.data);
     } catch (error) {
-      console.log(error.response);
+      console.log("wea", error);
     }
   };
 
@@ -48,9 +61,10 @@ export function TaskProvider({ children }) {
     }
   };
 
-  const editTask = async (task) => {
+  const editTask = async (id, newTask) => {
     try {
-      console.log("ediiiiiiiit", task);
+      const res = await updateTaskRequest(id, newTask);
+      console.log(res);
     } catch (error) {
       console.log(error.message);
     }
@@ -64,6 +78,7 @@ export function TaskProvider({ children }) {
         createTask,
         deleteTask,
         editTask,
+        getSingleTask,
       }}
     >
       {children}
