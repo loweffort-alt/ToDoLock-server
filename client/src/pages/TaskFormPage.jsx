@@ -11,15 +11,15 @@ const TaskFormPage = () => {
   const params = useParams();
 
   useEffect(() => {
-    async function loadTask(id) {
-      const res = await getSingleTask(id);
-      setValue("title", res.title);
-      setValue("description", res.description);
+    async function loadTask() {
+      if (params.id) {
+        const res = await getSingleTask(params.id);
+        setValue("title", res.title);
+        setValue("description", res.description);
+      }
     }
 
-    if (params.id) {
-      loadTask(params.id);
-    }
+    loadTask();
   }, []);
 
   const onSubmit = handleSubmit((data) => {

@@ -27,7 +27,7 @@ export function TaskProvider({ children }) {
       const res = await getTasksRequest();
       setTasks(res.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -36,7 +36,7 @@ export function TaskProvider({ children }) {
       const res = await getSingleTaskRequest(id);
       return res.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -46,27 +46,25 @@ export function TaskProvider({ children }) {
       const res = await getTasksRequest();
       setTasks(res.data);
     } catch (error) {
-      console.log("wea", error);
+      console.error(error);
     }
   };
 
   const deleteTask = async (id) => {
     try {
-      console.log("ptmrr", id);
       await deleteTaskRequest(id);
       const res = await getTasksRequest();
       setTasks(res.data);
     } catch (error) {
-      console.log(error.message);
+      console.error(error);
     }
   };
 
   const editTask = async (id, newTask) => {
     try {
-      const res = await updateTaskRequest(id, newTask);
-      console.log(res);
+      await updateTaskRequest(id, newTask);
     } catch (error) {
-      console.log(error.message);
+      console.error(error);
     }
   };
 
