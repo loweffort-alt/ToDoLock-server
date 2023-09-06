@@ -16,7 +16,7 @@ function App() {
     <AuthProvider>
       <TaskProvider>
         <BrowserRouter>
-          <main className="container mx-auto px-10">
+          <main className="container mx-auto px-5 sm:px-10">
             <Navbar />
             <Routes>
               {/*Public Paths*/}

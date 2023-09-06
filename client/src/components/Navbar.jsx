@@ -5,24 +5,28 @@ function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
 
   return (
-    <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10 rounded-lg">
-      <Link to="/">
+    <nav className="container bg-zinc-700 my-3 flex justify-between py-5 px-5 sm:px-10 rounded-lg items-center">
+      <Link to={isAuthenticated ? "/tasks" : "/"}>
         <h1 className="text-2xl font-bold">Task Manager</h1>
+        {isAuthenticated ? <h3> Welcome {user.username} </h3> : ""}
       </Link>
-      <ul className="flex gap-x-10">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {isAuthenticated ? (
           <>
-            <li>Welcome {user.username}</li>
             <li>
               <Link
                 to="/new-task"
-                className="bg-indigo-500 px-4 py-1 rounded-sm"
+                className="bg-indigo-500 hover:bg-indigo-700 px-2 py-1 sm:px-4 rounded-sm"
               >
                 Add Task
               </Link>
             </li>
             <li>
-              <Link to="/" onClick={() => logout()}>
+              <Link
+                to="/"
+                onClick={() => logout()}
+                className="bg-red-700 hover:bg-red-800 px-2 py-1 sm:px-4 rounded-sm"
+              >
                 Logout
               </Link>
             </li>
