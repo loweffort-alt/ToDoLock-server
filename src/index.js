@@ -1,10 +1,13 @@
 import app from "./app.js";
-import { connectDB } from "./db.js";
+//import { connectDB } from "./dbLocal.js";
+import "dotenv/config.js";
+import { run } from "./dbRemote.js";
 
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 
-connectDB();
+//connectDB();
+run();
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });

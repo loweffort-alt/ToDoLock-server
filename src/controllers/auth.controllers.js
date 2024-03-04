@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jws.js";
-import { TOKEN_KEY } from "../config.js";
+import "dotenv/config.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
@@ -91,7 +91,7 @@ export const verifyToken = async (req, res) => {
 
   if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-  jwt.verify(token, TOKEN_KEY, async (err, decode) => {
+  jwt.verify(token, process.env.TOKEN_KEY, async (err, decode) => {
     if (err) return res.status(401).json({ message: "Unauthorized" });
     const userFound = await User.findById(decode.id);
     if (!userFound) return res.status(401).json({ message: "Unauthorized" });
