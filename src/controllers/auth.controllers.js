@@ -24,7 +24,11 @@ export const register = async (req, res) => {
     const userSaved = await newUser.save();
 
     const token = await createAccessToken({ id: userSaved._id });
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.COOKIES_SECURE,
+      sameSite: "None",
+    });
     res.json({
       message: "User registered successfully",
       id: userSaved._id,
@@ -51,7 +55,11 @@ export const login = async (req, res) => {
       return res.status(400).json(["Close current session to login"]);
 
     const token = await createAccessToken({ id: userFound._id });
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.COOKIES_SECURE,
+      sameSite: "None",
+    });
     res.send(userFound);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -63,6 +71,9 @@ export const logout = async (req, res) => {
   if (!userFound)
     return res.status(400).json({ message: "Can't logout with out account" });
   res.cookie("token", "", {
+    httpOnly: true,
+    secure: process.env.COOKIES_SECURE,
+    sameSite: "None",
     expires: new Date(0),
   });
   res.sendStatus(200);
@@ -81,7 +92,11 @@ export const profile = async (req, res) => {
 
 export const deleteProfile = async (req, res) => {
   const userFound = await User.findByIdAndDelete(req.user.id);
-  res.cookie("token", "");
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: process.env.COOKIES_SECURE,
+    sameSite: "None",
+  });
   if (!userFound) return res.status(400).json({ message: "User not found" });
   return res.send("Account Deleted");
 };
